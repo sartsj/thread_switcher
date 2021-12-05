@@ -5,6 +5,7 @@ from typing import Iterable
 from src.core import Core, get_cores, get_index_of_core_in
 from src.log import format_date_time, log
 from src.timing import wait_and_sync
+from src.monitor import monitor_for_errors
 
 
 def execute(cfg: dict):
@@ -15,15 +16,15 @@ def execute(cfg: dict):
         for core in get_infinite_core_iterator(cores, cfg["starting_core"]):
             log_starting_core(core)
             set_active_core_for(core, cfg["process_to_switch"])
-            wait_and_sync(cfg["switch_every"], cfg["sync_on_clock_minute"])
+            monitor_for_errors(cfg["p95_results_file"], cfg["switch_every_n_seconds"])
+
     except KeyboardInterrupt as e:
         print("Stopped")
         raise(e)
 
 
 def log_starting_core(core: Core):
-    message = format_date_time(dt.now()) + f" switching to {core}"
-    log(message)
+    log(f"Switching to {core}")
 
 
 def set_active_core_for(core: Core, process_name: str) -> None:
