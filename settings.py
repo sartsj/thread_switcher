@@ -11,13 +11,15 @@ necessary = {
 
     "hyper_threading": True,
     # True or False, whether your CPU has 2 threads per core (SMT is AMD word)
+
+    "p95_results_file": r"C:\tools\p95v307b9.win64\results.txt"
 }
 ##############################################################################
 
 
 # The below are optional
 other_options = {
-    "switch_every": timedelta(minutes=5),
+    "switch_every_n_seconds": 300,
     # time between switching threads
     "sync_on_clock_minute": True,
     # synchronize with wall time because prime95 only logs time in hh:mm
